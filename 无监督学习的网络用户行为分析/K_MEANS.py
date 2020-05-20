@@ -77,41 +77,43 @@ def TFKMeansCluster(vectors, noofclusters):
 
         # SESSION OF COMPUTATION
 
-        sess = tf.Session()
+        sess = tf.compat.v1.Session()
 
         centroids = [tf.Variable((vectors[vector_indices[i]]))
                      for i in range(noofclusters)]
 
-        centroid_value = tf.placeholder("float64", [dim])
+        centroid_value = tf.compat.v1.placeholder("float64", [dim])
         cent_assigns = []
         for centroid in centroids:
-            cent_assigns.append(tf.assign(centroid, centroid_value))
+            cent_assigns.append(tf.compat.v1.assign(centroid, centroid_value))
 
         assignments = [tf.Variable(0) for i in range(len(vectors))]
 
-        assignment_value = tf.placeholder("int32")
+        assignment_value = tf.compat.v1.placeholder("int32")
         cluster_assigns = []
         for assignment in assignments:
-            cluster_assigns.append(tf.assign(assignment,
+            cluster_assigns.append(tf.compat.v1.assign(assignment,
                                              assignment_value))
 
         # 创建一个用于计算均值的变量
-        mean_input = tf.placeholder("float", [None, dim])
+        mean_input = tf.compat.v1.placeholder("float", [None, dim])
         # 用于获取输入的向量组，并从0维开始计算平均值
         mean_op = tf.reduce_mean(mean_input, 0)
 
         # 用于计算欧氏距离的两个变量
-        v1 = tf.placeholder("float", [dim])
-        v2 = tf.placeholder("float", [dim])
+        v1 = tf.compat.v1.placeholder("float", [dim])
+        v2 = tf.compat.v1.placeholder("float", [dim])
 
         euclid_dist = tf.sqrt(tf.reduce_sum(tf.pow(tf.subtract(v1, v2), 2)))
 
         ##构建一个根据欧氏距离分配向量到簇的变量
-        centroid_distances = tf.placeholder("float", [noofclusters])
+        centroid_distances = tf.compat.v1.placeholder("float", [noofclusters])
         cluster_assignment = tf.argmin(centroid_distances, 0)
 
         # 变量初始化器
-        init_op = tf.initialize_all_variables()
+        print('初始')
+        init_op = tf.compat.v1.global_variables_initializer()
+        print('初始')
 
         # 初始化所有变量
         sess.run(init_op)
@@ -166,7 +168,7 @@ if __name__ == '__main__':
 
     c, a = TFKMeansCluster(data, 4)
 
-    # numpy.savetxt('result.csv', a, delimiter = ',')
+    numpy.savetxt('result.csv', a, delimiter = ',')
 
     print(c)
     print(a)
