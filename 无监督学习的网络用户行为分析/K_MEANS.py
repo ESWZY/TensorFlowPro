@@ -26,12 +26,6 @@ DATA_PATH = "data_10000.csv"  # 未添加label的数据集
 # neptune. -> 3
 # smurf. -> 4
 
-f = open(DATA_PATH, "rb")
-data_matrix = numpy.loadtxt(DATA_PATH, delimiter=",", skiprows=0)
-f.close()
-row_data = data_matrix.size / len(data_matrix[0])
-column_data = len(data_matrix[0])
-
 
 def handle(data_matrix):
     row_data = data_matrix.size / len(data_matrix[0])
@@ -162,21 +156,31 @@ def TFKMeansCluster(vectors, noofclusters):
 
 
 if __name__ == '__main__':
+    f = open(DATA_PATH, "rb")
+    data_matrix = numpy.loadtxt(DATA_PATH, delimiter=",", skiprows=0)
+    f.close()
+
+    row_data = data_matrix.size / len(data_matrix[0])
+    column_data = len(data_matrix[0])
     row_data = int(row_data)
 
     data = handle(data_matrix)
 
     c, a = TFKMeansCluster(data, 4)
 
-    numpy.savetxt('result.csv', a, delimiter = ',')
+    numpy.savetxt('result.csv', a, delimiter=',')
 
-    print(c)
+    for i in c:
+        print(i)
+
     print(a)
+
     cnt1 = 0
     cnt2 = 0
     cnt3 = 0
     cnt4 = 0
     cnt5 = 0
+
     for i in range(len(a)):
         if a[i] == 0:
             cnt1 += 1
@@ -188,6 +192,7 @@ if __name__ == '__main__':
             cnt4 += 1
         else:
             cnt5 += 1
+
     print("quantity of num0 is " + str(cnt1))
     print("quantity of num1 is " + str(cnt2))
     print("quantity of num2 is " + str(cnt3))
