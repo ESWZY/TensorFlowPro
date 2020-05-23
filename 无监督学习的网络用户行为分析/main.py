@@ -1,7 +1,21 @@
 # -*- coding: utf-8 -*-
 
-from ml_algorithms import KMeansAlgorithm
+from ml_algorithms import (
+    KMeansAlgorithm,
+    RandomForestAlgorithm,
+    SVMAlgorithm,
+    LogisticRegressionAlgorithm
+)
 
 if __name__ == '__main__':
-    km = KMeansAlgorithm()
-    km.run()
+    kma = KMeansAlgorithm()
+    kma.run()
+
+    rfa = RandomForestAlgorithm()
+    rfa.run()
+
+    svma = SVMAlgorithm()
+    svma.run()
+
+    lra = LogisticRegressionAlgorithm()
+    lra.run()
