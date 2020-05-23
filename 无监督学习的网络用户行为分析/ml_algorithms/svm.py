@@ -1,25 +1,21 @@
 # -*- coding: utf-8 -*-
 # for mac
 import matplotlib
-matplotlib.use('TkAgg')
-
 import matplotlib.pyplot as plt
+from ml_algorithms.ml_algorithm_interface import AlgorithmInterface
 from sklearn import metrics
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 from sklearn.metrics import auc
-from sklearn.pipeline import Pipeline
-from sklearn.svm import SVC
 from sklearn.model_selection import RandomizedSearchCV
+from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
-from ml_algorithms.ml_algorithm_interface import AlgorithmInterface
+from sklearn.svm import SVC
 
+matplotlib.use('TkAgg')
 
 class SVMAlgorithm(AlgorithmInterface):
     def __init__(self):
         super(SVMAlgorithm, self).__init__()
-
-    def feature_engineering(self):
-        self.convert_symbolic_feature_into_continuous()
 
     def train_phase(self):
         pipe_svc = Pipeline([('scl', StandardScaler()),
@@ -41,7 +37,7 @@ class SVMAlgorithm(AlgorithmInterface):
                                              return_train_score=True,
                                              random_state=42)
 
-        # 训练
+        # 开始训练
         self.classifier.fit(self.train_data, self.train_label)
         print("训练结束")
 

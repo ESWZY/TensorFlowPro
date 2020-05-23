@@ -1,22 +1,17 @@
 # -*- coding: utf-8 -*-
 import matplotlib
+import matplotlib.pyplot as plt
+from ml_algorithms.ml_algorithm_interface import AlgorithmInterface
+from sklearn import metrics
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, precision_score, recall_score, auc
+from sklearn.model_selection import RandomizedSearchCV
+
 matplotlib.use('TkAgg')
 
-import matplotlib.pyplot as plt
-from sklearn import metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score
-from sklearn.metrics import auc
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import RandomizedSearchCV
-from ml_algorithms.ml_algorithm_interface import AlgorithmInterface
-
-
-class RandomForest(AlgorithmInterface):
+class RandomForestAlgorithm(AlgorithmInterface):
     def __init__(self):
-        super(RandomForest, self).__init__()
-
-    def feature_engineering(self):
-        self.convert_symbolic_feature_into_continuous()
+        super(RandomForestAlgorithm, self).__init__()
 
     def train_phase(self):
         random_forest = RandomForestClassifier()
@@ -33,7 +28,6 @@ class RandomForest(AlgorithmInterface):
         hyper_parameter_grid = {'n_estimators': n_estimators,
                                 'max_depth': max_depth}
 
-        # Set up the random search with 4-fold cross validation
         # 设置4折交叉验证随机搜索
         self.classifier = RandomizedSearchCV(estimator=random_forest,
                                              param_distributions=hyper_parameter_grid,
@@ -43,7 +37,7 @@ class RandomForest(AlgorithmInterface):
                                              return_train_score=True,
                                              random_state=42)
 
-        # 训练
+        # 开始训练
         self.classifier.fit(self.train_data, self.train_label)
         print("训练结束")
 
