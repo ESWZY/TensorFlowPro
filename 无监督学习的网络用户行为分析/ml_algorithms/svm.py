@@ -17,6 +17,9 @@ class SVMAlgorithm(AlgorithmInterface):
     def __init__(self):
         super(SVMAlgorithm, self).__init__()
 
+    def feature_engineering(self):
+        self.convert_symbolic_feature_into_continuous()
+
     def train_phase(self):
         pipe_svc = Pipeline([('scl', StandardScaler()),
                              ('clf', SVC(random_state=1))])

@@ -16,6 +16,9 @@ class LogisticRegressionAlgorithm(AlgorithmInterface):
     def __init__(self):
         super(LogisticRegressionAlgorithm, self).__init__()
 
+    def feature_engineering(self):
+        self.convert_symbolic_feature_into_continuous()
+
     def train_phase(self):
         pipe_logistic_regression = Pipeline([('sc', StandardScaler()),
                                             ('pca', PCA(n_components=2)),

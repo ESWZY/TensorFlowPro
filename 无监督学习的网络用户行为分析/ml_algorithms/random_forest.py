@@ -13,6 +13,9 @@ class RandomForestAlgorithm(AlgorithmInterface):
     def __init__(self):
         super(RandomForestAlgorithm, self).__init__()
 
+    def feature_engineering(self):
+        self.convert_symbolic_feature_into_continuous()
+
     def train_phase(self):
         random_forest = RandomForestClassifier()
 
