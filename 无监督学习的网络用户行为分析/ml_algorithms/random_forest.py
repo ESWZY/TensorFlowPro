@@ -6,11 +6,13 @@ from sklearn import metrics
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, auc
 from sklearn.model_selection import RandomizedSearchCV
+from collections import OrderedDict
 
 matplotlib.use('TkAgg')
 
 class RandomForestAlgorithm(AlgorithmInterface):
     def __init__(self):
+        self.columns = OrderedDict()
         super(RandomForestAlgorithm, self).__init__()
 
     def feature_engineering(self):
@@ -45,12 +47,20 @@ class RandomForestAlgorithm(AlgorithmInterface):
         print("训练结束")
 
     def test_phase(self):
-        y_predict = self.classifier.predict(self.test_data)
-        print("准确度: %f" % accuracy_score(self.test_label, y_predict))
-        print("精确度: %f" % precision_score(self.test_label, y_predict, average="macro"))
-        print("召回率: %f" % recall_score(self.test_label, y_predict, average="macro"))
+        self.y_predict = self.classifier.predict(self.test_data)
 
-        fpr, tpr, thresholds = metrics.roc_curve(y_predict, self.test_label)
+        self.accuracy_score = accuracy_score(self.test_label, self.y_predict)
+        print("准确度: %f" % self.accuracy_score)
+
+        self.precision_score = precision_score(self.test_label, self.y_predict, average="macro")
+        print("精确度: %f" % precision_score(self.test_label, self.y_predict, average="macro"))
+
+        self.recall_score = recall_score(self.test_label, self.y_predict, average="macro")
+        print("召回率: %f" % recall_score(self.test_label, self.y_predict, average="macro"))
+
+
+    def show(self):
+        fpr, tpr, thresholds = metrics.roc_curve(self.y_predict, self.test_label)
         plt.plot(fpr, tpr, marker='o')
         plt.show()
         auc_score = auc(fpr, tpr)

@@ -8,21 +8,15 @@ class AlgorithmBaseInterface(metaclass=abc.ABCMeta):
     def __init__(self):
         self.load_data()
 
-    def load_data(self):
-        pass
 
-    def run(self):
-        pass
-
-
-class AlgorithmInterface(AlgorithmBaseInterface):
+class AlgorithmInterface(metaclass=abc.ABCMeta):
     def __init__(self):
-        super().__init__()
         self.train_data = None
         self.train_label = None
         self.test_data = None
         self.test_label = None
         self.columns = OrderedDict()
+        self.load_data()
         self.classifier = None
 
     def load_data(self):
@@ -84,3 +78,10 @@ class AlgorithmInterface(AlgorithmBaseInterface):
     @abc.abstractmethod
     def test_phase(self):
         pass
+
+    @abc.abstractmethod
+    def show(self):
+        pass
+
+    def predict(self, test_data):
+        self.classifier.predict(test_data)
