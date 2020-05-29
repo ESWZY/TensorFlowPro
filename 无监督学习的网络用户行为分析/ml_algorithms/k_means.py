@@ -14,7 +14,7 @@ class KMeansAlgorithm(AlgorithmBaseInterface):
 
     def __init__(self):
         super(KMeansAlgorithm, self).__init__()
-        self.DATA_PATH = "data_10000.csv"  # 未添加label的数据集
+        self.DATA_PATH = "KDD99/data_10000.csv"  # 未添加label的数据集
 
         # tcp -> 1
         # icmp - > 2
