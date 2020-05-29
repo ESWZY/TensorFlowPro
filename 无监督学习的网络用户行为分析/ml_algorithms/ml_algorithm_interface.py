@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import abc
-import pandas as pd
 from collections import OrderedDict
 
 
@@ -36,14 +35,14 @@ class AlgorithmInterface(metaclass=abc.ABCMeta):
                 self.columns[key] = data_type.replace("\n", "")
 
         train_data_path = "KDD99/KDDTrain+.csv"
-        data = pd.read_csv(train_data_path)
+        data = pandas.read_csv(train_data_path)
         self.train_data = data.iloc[:, 0:-2]
         self.train_label = data.iloc[:, -2]
         self.train_data.columns = self.columns.keys()
         self.train_label.replace(labels_2_dict, inplace=True)
 
         test_data_path = "KDD99/KDDTest+.csv"
-        data = pd.read_csv(test_data_path)
+        data = pandas.read_csv(test_data_path)
         self.test_data = data.iloc[:, 0:-2]
         self.test_label = data.iloc[:, -2]
         self.test_data.columns = self.columns.keys()
@@ -67,7 +66,6 @@ class AlgorithmInterface(metaclass=abc.ABCMeta):
         self.train_phase()
         self.test_phase()
 
-    @abc.abstractmethod
     def feature_engineering(self):
         pass
 
@@ -79,7 +77,6 @@ class AlgorithmInterface(metaclass=abc.ABCMeta):
     def test_phase(self):
         pass
 
-    @abc.abstractmethod
     def show(self):
         pass
 
