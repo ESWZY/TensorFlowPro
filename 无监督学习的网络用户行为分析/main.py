@@ -35,7 +35,7 @@ if __name__ == '__main__':
     lra.run()
 
     vclf = VotingClassifier(rfa, svma, lra)
-    vclf = vclf.run()
+    vclf.run()
 
     # 在数据中取出1000条，模仿一组聚类，统计预测结果
     for i in range(1, 1000):

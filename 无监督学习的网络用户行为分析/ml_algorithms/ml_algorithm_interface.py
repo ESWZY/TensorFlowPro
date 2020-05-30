@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import abc
+import pandas
 from collections import OrderedDict
 
 
